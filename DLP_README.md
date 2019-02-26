@@ -66,7 +66,9 @@ The accuracy and loss results are below.
 
 ![Loss](ch3/binary_class_movie_reviews/bi_clf_train_and_val_loss.png)
 
-We can see the accuracy increasing and the loss decreasing when the model is run on the training data, but based on the validation data, the model is becoming overfit after only two or three epochs. In this case, a model with three epochs will perform better than a model run over twenty epochs.
+We can see the accuracy increasing and the loss decreasing when the model is run on the training data, but based on the validation data, the model is becoming overfit after only two or three epochs.
+
+In this case, a model with three epochs will perform better than a model run over twenty epochs. To prevent overfitting, we can train the model on more training data. Another option is to add a dropout layer to our model, which is a regularization technique used in neural networks go mitigate overfitting. 
 
 *Two other problems I tackled with neural networks in chapter 3 were a multi-class classification problem involving classifying newswires into 40+ categories, and a regression problem involving predicting house prices.*
 

@@ -68,7 +68,7 @@ The accuracy and loss results are below.
 
 We can see the accuracy increasing and the loss decreasing when the model is run on the training data, but based on the validation data, the model is becoming overfit after only two or three epochs.
 
-In this case, a model with three epochs will perform better than a model run over twenty epochs. To prevent overfitting, we can train the model on more training data. Another option is to add a dropout layer to our model, which is a regularization technique used in neural networks go mitigate overfitting. 
+In this case, a model with three epochs will perform better than a model run over twenty epochs. To prevent overfitting, we can train the model on more training data. Another option is to add a dropout layer to our model, which is a regularization technique used in neural networks go mitigate overfitting.
 
 *Two other problems I tackled with neural networks in chapter 3 were a multi-class classification problem involving classifying newswires into 40+ categories, and a regression problem involving predicting house prices.*
 
@@ -78,7 +78,11 @@ For this exercise, we utilized computer vision in order to classify pictures of 
 
 In order to generate more training data from the existing images we were using, we did some data augmentation. Data augmentation is a method to mitigate overfitting, and is done by randomly transforming the images we have. The new augmented images are variations of an image that have been stretched, zoomed, flipped, etc. Here is an example of data augmentation:
 
-*Example of augmented image*
+ ![Augment1](ch5/CatvDog_cnn/dog_augmentaiton_img_3.png)|![Augment1](ch5/CatvDog_cnn/dog_augmentaiton_img_4.png)
+:-------------------------:|:-------------------------:
+![Augment1](ch5/CatvDog_cnn/dog_augmentaiton_img.png)|  ![Augment1](ch5/CatvDog_cnn/dog_augmentaiton_img_2.png)
+
+
 
 Without data augmentation, the trained convnet resulted in overfitting of the testing data. By using the augmented images, as well as adding a Dropout layer to the network, the convnet fit well to the test data. The bulk of the code is below.
 * The Conv2D layer allows the model to pick-up on two-dimensional patterns of the data, which make convnets useful for image classification and computer vision.
@@ -115,3 +119,7 @@ model.compile(loss='binary_crossentropy',
 ```
 
 Here we can see the model continues to increase accuracy and decrease loss over the epochs. This is a good sign.
+
+![Accuracy](ch5/CatvDog_cnn/train_and_val_acc.png)
+
+![Loss](ch5/CatvDog_cnn/val_loss.png)

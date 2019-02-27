@@ -77,6 +77,7 @@ if __name__ == '__main__':
     #     shutil.copyfile(src, dst)
     # =========================================================
     # Start creating the CNN
+    '''
     model = models.Sequential()
     model.add(layers.Conv2D(32, (3,3), activation='relu',
                             input_shape=(150, 150, 3)))
@@ -127,7 +128,7 @@ if __name__ == '__main__':
     #     print(data_batch.shape)
     #     print(labels_batch.shape)
     #     break
-
+    '''
     history = model.fit_generator(
             train_generator,
             steps_per_epoch=100,
@@ -136,6 +137,7 @@ if __name__ == '__main__':
             validation_steps=50)
 
     model.save('cats_and_dogs_small_2.h5')
+
     # =========================================================
     # Display curves of loss and accuracy
     acc = history.history['acc']
@@ -150,14 +152,18 @@ if __name__ == '__main__':
     plt.title('Training and validation accuracy')
     plt.legend()
     plt.savefig('train_and_val_acc')
+    plt.close()
 
     plt.plot(epochs, loss, 'bo', label='Training loss')
     plt.plot(epochs, val_loss, 'b', label='Validation loss')
     plt.title('Training and validation loss')
     plt.legend()
     plt.savefig('train_and_val_loss')
+    plt.close()
+
     # =========================================================
     # Data augmentation
+    '''
     datagen = ImageDataGenerator(
             rotation_range=40,
             width_shift_range=0.2,
@@ -167,8 +173,8 @@ if __name__ == '__main__':
             horizontal_flip=True,
             fill_mode='nearest')
     # view augmented images
-    fnames = [os.path.join(train_dogs_dir, fname) for
-        fname in os.listdir(train_dogs_dir)]
+    fnames = [os.path.join('../../../data/catdogCNN/model_data/train/dogs', fname) for
+        fname in os.listdir('../../../data/catdogCNN/model_data/train/dogs')]
     img_path = fnames[4]
     img = image.load_img(img_path, target_size=(150, 150))
     x = image.img_to_array(img)
@@ -180,4 +186,5 @@ if __name__ == '__main__':
         i += 1
         if i % 4 == 0:
             break
-    plt.savefig('dog_augmentaiton_img')
+    plt.savefig('dog_augmentaiton_img_4')
+    '''

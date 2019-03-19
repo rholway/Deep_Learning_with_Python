@@ -1,5 +1,5 @@
 # Deep Learning with Python
-In this book by Francois Chollet, he goes into detail about deep learning. Below are some examples from his book I worked through with Python.
+In this book by Francois Chollet, he goes into detail about the applications of deep learning. Below are some examples from his book I worked through with Python.
 
 ## MNIST with Basic Neural Network (Chapter 2)
 The Modified National Institute of Standards and Technology (MNIST) database is a database of handwritten digits largely used for training image processing systems - Wikipedia
@@ -123,3 +123,30 @@ Here we can see the model continues to increase accuracy and decrease loss over 
 ![Accuracy](ch5/CatvDog_cnn/train_and_val_acc.png)
 
 ![Loss](ch5/CatvDog_cnn/val_loss.png)
+
+Additionally, using a pre-trained convnet (such as VGG16), and replacing the last layer with the classification layer for dogs or cats should help increase the accuracy and decrease the loss of the model. By extracting features of the images using the pre-trained convolutional base, we can also increase the model predictions. We can do feature extraction with data augmentation (very computational expensive, but better results) or without data augmentation. When we are using a pre-trained convnet, it's important to freeze the convolutional base before we compile and train the model. This way the weights of the model are not updated unnecessarily (since we already have the weights we want in-place).
+
+Convolutional neural networks are great of image processing and object detection.
+
+## Using Deep Learning for Text and Sequences (Chapter 7)
+In this chapter, we look at processing text, timeseries, and sequence data. The techniques used for this are applicable to many real-world scenarios, such as:
+* **Document classification** (ID the topic of an article, or the author of a book)
+* **Timeseries comparisons** (estimating how closely related things are, like documents, or stock tickers)
+* **Sequence-to-sequence learning** (language translation)
+* **Sentiment analysis** (classifying tweets or reviews as positive or negative)
+* **Timeseries forecasting** (predicting the weather)
+
+When we are working with text data, deep learning models cannot take in raw text, so the text must be preprocessed. This can be done a few ways.
+* Transform each word of the vocabulary into a vector
+* Transform each character into a vector
+* Extract n-grams form words or characters, and transform each n-gram into a vector (this is better for shallow learning, such as regression and random forests)
+
+Once we have the text vectorized, the deep learning networks can recognize patterns within the combination of vectors. This is just like how the deep learning networks recognize patterns within the combination of pixels in covnets.
+
+Word vectors vs. word embeddings
+* **Word vectors** - one-hot encoding words to create vectors. These vectors have to have the same length of the vocabulary, which can get long, so they end up being sparse, binary, high-dimensional, and hardcoded.
+* **Word embeddings** - Can be of length *n*, so they are lower-dimensional. The values within the embeddings are floating-point, so the embeddings are dense, and the embeddings are learned from data, rather than hardcoded.
+
+Just like with convnets, we can used pre-trained word embeddings if we don't have enough training data available to learn appropriate embeddings.
+* Word2vec, developed by Tomas Mikolov at Google in 2013 is one example.
+* Global Vectors for Word Representation (GloVe), developed by Stanford researchers in 2014, is another example, which we will use. 

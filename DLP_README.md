@@ -141,7 +141,7 @@ When we are working with text data, deep learning models cannot take in raw text
 * Transform each character into a vector
 * Extract n-grams form words or characters, and transform each n-gram into a vector (this is better for shallow learning, such as regression and random forests)
 
-Once we have the text vectorized, the deep learning networks can recognize patterns within the combination of vectors. This is just like how the deep learning networks recognize patterns within the combination of pixels in covnets.
+Once we have the text vectorized, the deep learning networks can recognize patterns within the combination of vectors. This is just like how the deep learning networks recognize patterns within the combination of pixels in convnets.
 
 Word vectors vs. word embeddings
 * **Word vectors** - one-hot encoding words to create vectors. These vectors have to have the same length of the vocabulary, which can get long, so they end up being sparse, binary, high-dimensional, and hardcoded.
@@ -149,4 +149,39 @@ Word vectors vs. word embeddings
 
 Just like with convnets, we can used pre-trained word embeddings if we don't have enough training data available to learn appropriate embeddings.
 * Word2vec, developed by Tomas Mikolov at Google in 2013 is one example.
-* Global Vectors for Word Representation (GloVe), developed by Stanford researchers in 2014, is another example, which we will use. 
+* Global Vectors for Word Representation (GloVe), developed by Stanford researchers in 2014, is another example, which we will use.
+
+In this example, we only use 200 training samples. Once we preprocess our raw data and prepare the GloVe word-embedding matrix for the model, we are able to define the model.
+
+```python
+# define the model
+model = Sequential()
+model.add(Embedding(max_words, embedding_dim, input_length=maxlen))
+model.add(Flatten())
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+model.summary()
+
+# load the GloVe matrix into the Embedding layer - the first layer
+# we want to keep the same weights from the pretrained model, not update
+# or train the weights, so we set the trainable attribute to false
+model.layers[0].set_weights([embedding_matrix])
+model.layers[0].trainable = False
+
+# compile, train, and evaluate
+model.compile(optimizer='rmsprop',
+                loss='binary_crossentropy',
+                metrics=['acc'])
+history = model.fit(x_train, y_train,
+                    epochs=10,
+                    batch_size=32,
+                    validation_data=(x_val, y_val))
+```
+
+We use the pre-trained model's weights (GloVe) as the first layer of the model, and do not update this layer. Let's have a look at the results.
+
+![Acc](ch6/train_val_acc.png)
+
+![Loss](ch6/train_val_loss.png)
+
+Because of the minimal amount of training samples, we observe overfitting. The best way to remedy this would be to gather more training samples. When we did not use a pre-trained model for this same example, the validation accuracy was slightly lower than this model with the pre-trained weights. 
